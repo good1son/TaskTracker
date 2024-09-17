@@ -5,8 +5,14 @@ public class SubTask extends Task {
         super(name);
     }
 
-    public SubTask(String name, String status) {
+    public SubTask(String name, statusTask status) {
         super(name, status);
+    }
+
+    public SubTask(String name, int id)
+    {
+        super(name, id);
+        this.epic = new Epic("Нет Эпика", id);
     }
 
     public void setEpic(Epic epic) {

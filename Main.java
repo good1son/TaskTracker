@@ -1,30 +1,33 @@
 
 public class Main {
     public static void main(String[] args) {
-        Manager manager = new Manager();
+        InMemoryTaskManager inMemoryTaskManager = new InMemoryTaskManager();
 
-        manager.createTask(new Epic("Переезд"), new SubTask("Собрать коробки"),
+        inMemoryTaskManager.createTask(new Epic("Переезд"),
+                new SubTask("Собрать коробки"),
                 new SubTask("Упаковать кошку"));
-        manager.createTask(new Epic ("Забыться"), new SubTask("Сказать слова прощания"));
-        manager.createTask(new Task("Просто задача №1"));
-        manager.createTask(new Task("Просто задача №2"));
+        inMemoryTaskManager.createTask(new Epic ("Забыться"), new SubTask("Сказать слова прощания"));
+        inMemoryTaskManager.createTask(new Task("Просто задача №1"));
+        inMemoryTaskManager.createTask(new Task("Просто задача №2"));
 
-        manager.showAllTasks();
-        manager.showAllEpics();
-        manager.showAllSubTasks();
+        inMemoryTaskManager.printAllTasks();
+        inMemoryTaskManager.printAllEpics();
+        inMemoryTaskManager.printAllSubTasks();
 
-        manager.updateSubTask("Собрать коробки", "DONE");
-        manager.updateSubTask("Упаковать кошку", "DONE");
-        manager.showAllEpics();
-
-        manager.deleteTask(6);
-        manager.updateTask("Просто задача №2", "DONE");
-        manager.showAllTasks();
-
-        manager.deleteAllSubTasks();
-        manager.showAllSubTasks();
-        manager.deleteAllEpics();
-        manager.showAllEpics();
+        System.out.println(inMemoryTaskManager.getEpic(4));
+        System.out.println(Managers.getDefaultHistory().getHistory());
+        System.out.println(inMemoryTaskManager.getEpic(1));
+        System.out.println(Managers.getDefaultHistory().getHistory());
+        System.out.println(inMemoryTaskManager.getTask(6));
+        System.out.println(Managers.getDefaultHistory().getHistory());
+        System.out.println(inMemoryTaskManager.getSubTask(2));
+        System.out.println(Managers.getDefaultHistory().getHistory());
+        System.out.println(inMemoryTaskManager.getSubTask(5));
+        System.out.println(Managers.getDefaultHistory().getHistory());
+        System.out.println(inMemoryTaskManager.getSubTask(3));
+        System.out.println(Managers.getDefaultHistory().getHistory());
+        System.out.println(inMemoryTaskManager.getTask(7));
+        System.out.println(Managers.getDefaultHistory().getHistory());
 
     }
 }
