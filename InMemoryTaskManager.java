@@ -128,6 +128,11 @@ public class InMemoryTaskManager implements TaskManager {
         tasks.put(id, task);
     }
 
+    public void createTask(Epic epic) {
+        epic.id = this.getId();
+        epics.put(id, epic);
+    }
+
     public void createTask(Epic epic, SubTask... subTasks) {
         epic.id = this.getId();
         epics.put(id, epic);
@@ -177,6 +182,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteTask(int id) {
         System.out.println("Удаление задачи: " + tasks.get(id));
+        InMemoryHistoryManager.history.removeNode(InMemoryHistoryManager.history.historyMap.get(id));
         tasks.remove(id);
     }
 
@@ -184,11 +190,12 @@ public class InMemoryTaskManager implements TaskManager {
     public void deleteEpic(int id) {
         System.out.println("Удаление ЭпикЗадачи: " + epics.get(id));
         Epic epic = epics.get(id);
-        for (int ids : subTasks.keySet()) {
-            if (Objects.equals(epic, subTasks.get(ids).epic))
-                subTasks.remove(ids);
+        for (SubTask subTasks : epic.subTasks) {
+            InMemoryHistoryManager.history.removeNode(InMemoryHistoryManager.history.historyMap.get(subTasks.id));
+            this.subTasks.remove(subTasks.id);
         }
         epics.remove(id);
+        InMemoryHistoryManager.history.removeNode(InMemoryHistoryManager.history.historyMap.get(id));
     }
 
     @Override
@@ -196,6 +203,7 @@ public class InMemoryTaskManager implements TaskManager {
         System.out.println("Удаление ПодЗадачи: " + subTasks.get(id));
         Epic epic = subTasks.get(id).epic;
         epic.subTasks.remove(subTasks.remove(id));
+        InMemoryHistoryManager.history.historyMap.remove(id);
         updateEpic(epic.name);
     }
 
